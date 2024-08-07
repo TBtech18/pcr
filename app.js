@@ -6,15 +6,12 @@ const argon2 = require('argon2');
 const util = require('util');
 require('dotenv').config();
 
-const db_host=process.env.host;
-const db_user=process.env.user;
-const db_name=process.env.database;
-const db_password= process.env.password
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password:"12345",
-  database:"bilal"
+  host: "sql12.freemysqlhosting.net",
+  user: "sql12724521",
+  password:"tKi3KEEfne",
+  database:"sql12724521",
+  port:3306
 });
 
 
