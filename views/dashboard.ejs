@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/output.css">
+</head>
+<body>
+    <nav class="bg-slate-900 p-2">
+        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div class=" flex h-16 items-center justify-between">
+            <div class=" inset-y-0 left-0 sm:hidden">
+
+            </div>
+            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+              <div class="flex flex-shrink-0 items-center">
+                <h1 class="h-8 w-auto text-blue-600 text-3xl font-bold">PCR</h1>
+              </div>
+              <button id="fetchButton" class="px-5 py-3 ml-5 justify-center bg-blue-500 text-white rounded hover:bg-blue-600" >Fetch Report</button>
+              <a href="/calculate" target="_blank"><button id="calculate" class="px-5 py-3 ml-5 justify-center bg-blue-500 text-white rounded hover:bg-blue-600" >Calculate</button></a>
+              <a href="/share" target="_blank"><button id="update" class="px-5 py-3 ml-5 justify-center bg-blue-500 text-white rounded hover:bg-blue-600" >Update Shares </button></a>
+              <a href="/delete" target="_blank"><button id="delete" class="px-5 py-3 ml-5 justify-center bg-blue-500 text-white rounded hover:bg-blue-600" >Delete</button></a>
+             
+            </div>
+            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                <span class="absolute -inset-1.5"></span>
+                <span class="sr-only">View notifications</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                </svg>
+              </button>
+      
+            
+            </div>
+          </div>
+        </div>
+      
+        </div>
+      </nav>
+      <h1 class="text-3xl font-bold text-blue-600 text-center p-2 ">Previous Reports</h1>
+        
+        <table id="reportTable" class="w-full mt-4 bg-zinc-700 border border-gray-900 rounded-lg">
+            <thead>
+                <tr id="tableHeaders" class="bg-gray-500 text-white border border--200">
+                   
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Table rows will be dynamically added here -->
+            </tbody>
+        </table>
+    
+        <script>
+             document.getElementById('fetchButton').addEventListener('click', () => {
+                fetch('/report')
+                    .then(response => response.json())
+                    .then(data => {
+                        const tableHeaders = Object.keys(data[0]);
+                        const tableHeaderRow = document.getElementById('tableHeaders');
+                        const tableBody = document.getElementById('tableBody');
+    
+                        // Clear any existing rows and headers
+                        tableHeaderRow.innerHTML = '';
+                        tableBody.innerHTML = '';
+    
+                        // Create table headers
+                        tableHeaders.forEach(header => {
+                            const th = document.createElement('th');
+                            th.textContent = header;
+                            th.className = 'px-2 py-2 border-b text-left text-white font-medium';
+                            tableHeaderRow.appendChild(th);
+                        });
+    
+                        // Create table rows
+                        data.forEach(row => {
+                            const tr = document.createElement('tr');
+                            tableHeaders.forEach(header => {
+                                const td = document.createElement('td');
+                                td.textContent = row[header];
+                                td.className = 'px-2 py-2 border-b text-white';
+                                tr.appendChild(td);
+                            });
+                            tableBody.appendChild(tr);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            });
+            document.getElementById('calculateButton').addEventListener('click', () => {
+                fetch('/calculate')
+                    .then(response => response.json())
+            })
+        </script>
+        </script>
+    
+</body>
+</html>
