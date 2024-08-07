@@ -154,11 +154,10 @@ app.post('/calculate', async (req, res) => {
   const { fromDate, toDate, perTestCost, purchases, expenditures } = req.body;
 
   try {
-    const salesQuery = `SELECT SUM(od.Price) AS total_price, SUM(od.qty) AS total_quantity
-                        FROM order_details AS od
-                        JOIN products AS p ON od.product_id = p.id
-                        WHERE od.product_id IN (SELECT id FROM products WHERE name LIKE '%PCR%')
-                        AND submited_date BETWEEN ? AND ?`;
+    const salesQuery = 'SELECT SUM(od.Price) AS total_price, SUM(od.qty) AS total_quantity
+FROM order_details AS od
+WHERE od.product_name LIKE '%PCR%'
+AND od.submited_date BETWEEN ? AND ?';
 
     const salesResults = await query(salesQuery, [fromDate, toDate]);
     const totalSales = salesResults[0].total_price || 0;
