@@ -5,15 +5,24 @@ const mysql = require('mysql');
 const argon2 = require('argon2');
 const util = require('util');
 require('dotenv').config();
+try {
+  var db = mysql.createConnection({
+    host: "31.220.106.51",
+    user: "u583874119_pcr",
+    password: "K|8/O!*Zeqm",
+    database: "u583874119_pcr",
+    connectTimeout: 20000 ,
+    acquireTimeout: 20000,
+  });
 
-const db = mysql.createConnection({
-  host: "sql12.freemysqlhosting.net",
-  user: "sql12724521",
-  password:"tKi3KEEfne",
-  database:"sql12724521",
-  port:3306
+} catch (error) {
+  console.log("error");
+
+}
+db.on('error', (err) => {
+  console.error('MySQL connection error:', err);
+
 });
-
 
 db.connect((err) => {
   if (err) {
