@@ -31,7 +31,9 @@ pool.on('error', (err) => {
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.get("/",(req,res)=>{
+  res.send("Hello!!")
+});
 // Route handlers
 app.post('/signin', async (req, res) => {
   const { email, password } = req.body;
