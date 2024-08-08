@@ -12,7 +12,7 @@ try {
     password: "K|8/O!*Zeqm",
     database: "u583874119_pcr",
     connectTimeout: 20000 ,
-    acquireTimeout: 20000,
+    acquireTimeout: 20000
   });
 
 } catch (error) {
