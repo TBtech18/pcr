@@ -132,14 +132,14 @@ app.post('/calculate', async (req, res) => {
   try {
     const salesQuery = "SELECT SUM(od.Price) AS total_price, SUM(od.qty) AS total_quantity FROM order_details AS od WHERE od.product_id IN (200,201,202,203) AND od.submited_date BETWEEN ? AND ?";
     const [salesResults] = await promisePool.query(salesQuery, [fromDate, toDate]);
-    const totalSales = salesResults[0].total_price || 0;
-    const totalTests = salesResults[0].total_quantity || 0;
+    const totalSales = salesResults[0].total_price;
+    const totalTests = salesResults[0].total_quantity;
 
     const configQuery = `SELECT ZulfiqarShare, shareholder, qasimLabPayment FROM config`;
     const [configResults] = await promisePool.query(configQuery);
-    const share = configResults[0].ZulfiqarShare || 0;
-    const numParticipants = configResults[0].shareholder || 0;
-    const QLP = configResults[0].qasimLabPayment || 0;
+    const share = configResults[0].ZulfiqarShare;
+    const numParticipants = configResults[0].shareholder;
+    const QLP = configResults[0].qasimLabPayment;
 
     const qasimLabPayment = QLP * totalTests;
     const totalCost = perTestCost * totalTests;
